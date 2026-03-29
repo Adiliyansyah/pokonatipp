@@ -5,14 +5,14 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function PieChart() {
-  const data = {
-    labels: ["Pria", "Wanita"],
+export default function PieChart({ data }: { data: { name: string; value: number }[] }) {
+  const chartData = {
+    labels: data.map(item => item.name),
     datasets: [
       {
-        label: "Distribusi Gender",
-        data: [192, 55],
-        backgroundColor: ["#3b82f6", "#ec4899"],
+        label: "Distribusi",
+        data: data.map(item => item.value),
+        backgroundColor: ["#3b82f6", "#ec4899", "#22c55e"],
         borderWidth: 2,
         borderColor: "#fff",
       },
@@ -20,8 +20,10 @@ export default function PieChart() {
   };
 
   return (
-    <div className="w-72 mx-auto">
-      <Pie data={data} />
+    <div className="w-full flex justify-center py-4">
+      <div className="w-80 h-80">
+        <Pie data={chartData} />
+      </div>
     </div>
   );
 }

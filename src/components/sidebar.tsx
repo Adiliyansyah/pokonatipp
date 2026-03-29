@@ -31,7 +31,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   return (
     <>
       <aside
-        className={`fixed top-0 left-0 h-screen bg-blue-900 text-white transition-all duration-300 z-50 flex flex-col ${
+        className={`fixed top-0 left-0 h-screen bg-gradient-to-b from-slate-900 to-blue-900 text-white transition-all duration-300 z-50 flex flex-col shadow-2xl ${
           isOpen ? "w-64" : "w-20"
         }`}
       >
@@ -60,10 +60,10 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-300 ${
                   isActive
-                    ? "bg-orange-400 text-white"
-                    : "text-blue-200 hover:bg-blue-800 hover:text-white"
+                    ? "bg-gradient-to-r from-orange-400 to-orange-500 text-white shadow-lg scale-105"
+                    : "text-blue-200 hover:bg-blue-800/50 hover:text-white"
                 }`}
                 title={!isOpen ? item.label : undefined}
               >
@@ -83,7 +83,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         {/* Footer */}
         {isOpen && (
           <div className="px-4 py-3 border-t border-blue-800">
-            <p className="text-xs text-blue-400">MIB v1.0 — Prototipe</p>
+            <p className="text-xs text-blue-400">Manajemen Informasi Biomedis v1.0 — Prototipe</p>
           </div>
         )}
       </aside>

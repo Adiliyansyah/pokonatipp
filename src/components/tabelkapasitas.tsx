@@ -1,11 +1,10 @@
 "use client";
+import { kapasitasData } from "@/app/data/overview2.js";
 
-const data = [
-  { no: 1, fase: "Fase Entry (Penerimaan)", kapasitas: 20, terisi: 14, kosong: 6, persen: "70%" },
-  { no: 2, fase: "Fase Primer (Intensif)", kapasitas: 40, terisi: 22, kosong: 18, persen: "55%" },
-  { no: 3, fase: "Fase Re-Entry (Persiapan Pulang)", kapasitas: 30, terisi: 16, kosong: 14, persen: "53%" },
-  { no: 4, fase: "Fase Rawat Jalan", kapasitas: 25, terisi: 9, kosong: 16, persen: "36%" },
-];
+const data = kapasitasData.map((item) => ({
+  ...item,
+  persen: item.kapasitas > 0 ? `${Math.round((item.terisi / item.kapasitas) * 100)}%` : "0%",
+}));
 
 const total = {
   kapasitas: data.reduce((a, b) => a + b.kapasitas, 0),

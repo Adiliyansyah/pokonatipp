@@ -12,20 +12,20 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
-export default function BarChart() {
-  const data = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun"],
+export default function BarChart({ data }: { data: { bulan: string; masuk: number; keluar: number }[] }) {
+  const chartData = {
+    labels: data.map(item => item.bulan),
     datasets: [
       {
-        label: "Klien Masuk",
-        data: [42, 38, 55, 47, 61, 58],
+        label: "Masuk",
+        data: data.map(item => item.masuk),
         backgroundColor: "#3b82f6",
         borderRadius: 6,
       },
       {
-        label: "Klien Keluar",
-        data: [30, 35, 40, 38, 50, 45],
-        backgroundColor: "#22c55e",
+        label: "Keluar",
+        data: data.map(item => item.keluar),
+        backgroundColor: "#f97316",
         borderRadius: 6,
       },
     ],
@@ -44,7 +44,7 @@ export default function BarChart() {
 
   return (
     <div className="w-full h-72">
-      <Bar data={data} options={options} />
+      <Bar data={chartData} options={options} />
     </div>
   );
 }

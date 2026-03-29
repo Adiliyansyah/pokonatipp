@@ -7,6 +7,12 @@ import PieChart from "@/components/piecharts";
 import TabelKeberhasilan from "@/components/tabelkeberhasilan";
 import TabelRelapse from "@/components/tabelrelapse";
 import TabelSelesaiRehab from "@/components/selesairehab";
+import { distribusiStatusKlien } from "../data/overview2.js";
+
+const genderData = [
+  { name: "Pria", value: 192 },
+  { name: "Wanita", value: 55 },
+];
 
 const trendData = [
   { name: "Jan", sembuh: 20, relapse: 4 },
@@ -15,6 +21,10 @@ const trendData = [
   { name: "Apr", sembuh: 40, relapse: 2 },
   { name: "Mei", sembuh: 48, relapse: 6 },
 ];
+
+const totalKlienAktif = distribusiStatusKlien.reduce((sum, item) => sum + item.value, 0);
+const kasusSembuh = distribusiStatusKlien.find((item) => item.name === "Sembuh")?.value ?? 0;
+const kasusRelapse = distribusiStatusKlien.find((item) => item.name === "Relapse")?.value ?? 0;
 
 export default function RehabilitasiPage() {
   return (
@@ -31,19 +41,19 @@ export default function RehabilitasiPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-gradient-to-r from-blue-500 to-teal-400 p-6 rounded-xl shadow text-white">
           <RxPeople className="text-5xl mb-2 opacity-80" />
-          <p className="text-3xl font-bold">247</p>
+          <p className="text-3xl font-bold">{totalKlienAktif}</p>
           <p className="text-sm mt-1 text-blue-100">Total Klien Aktif</p>
         </div>
 
         <div className="bg-gradient-to-r from-green-400 to-green-600 p-6 rounded-xl shadow text-white">
           <MdOutlineTrendingUp className="text-5xl mb-2 opacity-80" />
-          <p className="text-3xl font-bold">194</p>
+          <p className="text-3xl font-bold">{kasusSembuh}</p>
           <p className="text-sm mt-1 text-green-100">Klien Sembuh</p>
         </div>
 
         <div className="bg-gradient-to-r from-orange-500 to-red-400 p-6 rounded-xl shadow text-white">
           <MdOutlineTrendingDown className="text-5xl mb-2 opacity-80" />
-          <p className="text-3xl font-bold">30</p>
+          <p className="text-3xl font-bold">{kasusRelapse}</p>
           <p className="text-sm mt-1 text-orange-100">Kasus Relapse</p>
         </div>
       </div>
@@ -72,7 +82,7 @@ export default function RehabilitasiPage() {
 
         <div className="bg-white p-6 rounded-xl shadow">
           <h2 className="text-lg font-bold text-gray-800 mb-4">Distribusi Gender</h2>
-          <PieChart />
+          <PieChart data={genderData} />
         </div>
       </div>
 
