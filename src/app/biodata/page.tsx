@@ -346,10 +346,7 @@ const biodataKlien = [
   { id:340, nama:'MY', jk:'Laki-Laki', umur:27, ttl:'Palu, 01 Sep 1998', agama:'Islam', pendidikan:'SMA/Sederajat', status_pernikahan:'Belum Menikah', pekerjaan:'Tidak Bekerja', tgl_masuk:'09 Mar 2026', tgl_keluar:'', rencana_rehab:'SEDANG', provinsi:'Sulawesi Tengah', zat:'Sabu', status:'Aktif' },
   { id:341, nama:'RY', jk:'Laki-Laki', umur:28, ttl:'Besiq, 20 Oct 1997', agama:'Kristen', pendidikan:'SMA/Sederajat', status_pernikahan:'Menikah', pekerjaan:'Tidak Bekerja', tgl_masuk:'09 Mar 2026', tgl_keluar:'', rencana_rehab:'BERAT', provinsi:'Sulawesi Tengah', zat:'Sabu', status:'Aktif' },
   { id:342, nama:'RD', jk:'Perempuan', umur:26, ttl:'Kelumpang, 13 Jan 2000', agama:'Islam', pendidikan:'S1/D4', status_pernikahan:'Cerai Hidup', pekerjaan:'Ibu Rumah Tangga', tgl_masuk:'09 Mar 2026', tgl_keluar:'', rencana_rehab:'SEDANG', provinsi:'Kalimantan Timur', zat:'Sabu', status:'Aktif' },
-  { id:343, nama:'Syahrial Bobo', jk:'Laki-Laki', umur:29, ttl:'Makassar, 15 Apr 1996', agama:'Islam', pendidikan:'SMA/Sederajat', status_pernikahan:'Belum Menikah', pekerjaan:'Wiraswasta', tgl_masuk:'10 Jan 2026', tgl_keluar:'', rencana_rehab:'SEDANG', provinsi:'Sulawesi Selatan', zat:'Sabu', status:'Aktif' },
-  { id:344, nama:'Iyan Pace', jk:'Laki-Laki', umur:34, ttl:'Bandung, 02 Sep 1991', agama:'Islam', pendidikan:'SMP/Sederajat', status_pernikahan:'Menikah', pekerjaan:'Buruh', tgl_masuk:'15 Feb 2026', tgl_keluar:'', rencana_rehab:'BERAT', provinsi:'Jawa Barat', zat:'Sabu', status:'Aktif' },
-  { id:345, nama:'Ni\'am Kopling', jk:'Laki-Laki', umur:27, ttl:'Surabaya, 20 Nov 1998', agama:'Islam', pendidikan:'SMA/Sederajat', status_pernikahan:'Belum Menikah', pekerjaan:'Sopir', tgl_masuk:'01 Mar 2026', tgl_keluar:'', rencana_rehab:'SEDANG', provinsi:'Jawa Timur', zat:'Sabu', status:'Aktif' }
-];
+  ];
 
 const PAGE_SIZE = 20;
 
