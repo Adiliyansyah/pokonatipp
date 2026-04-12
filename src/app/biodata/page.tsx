@@ -328,119 +328,147 @@ export default function BiodataPage() {
       </div>
 
       {/* ====================== */}
-      {/* MODAL EDIT */}
+      {/* MODAL EDIT LENGKAP */}
       {/* ====================== */}
       {editingClient && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white px-6 py-4 border-b flex justify-between items-center z-10">
-              <h2 className="text-lg font-bold text-gray-800">Edit Data Klien</h2>
-              <button
-                onClick={() => setEditingClient(null)}
-                className="text-gray-400 hover:text-gray-600"
-              >
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
+            <div className="sticky top-0 bg-white px-6 py-4 border-b flex justify-between items-center z-10 rounded-t-xl">
+              <h2 className="text-lg font-bold text-gray-800">Edit Data Klien Lengkap</h2>
+              <button onClick={() => setEditingClient(null)} className="text-gray-400 hover:text-gray-600">
                 <X size={20} />
               </button>
             </div>
 
-            <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              
+              {/* Kolom Input Standard */}
               <div>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Inisial</label>
-                <input
-                  type="text"
-                  value={editingClient.INISIAL ?? ""}
-                  onChange={(e) => handleModalChange("INISIAL", e.target.value)}
-                  className="w-full border border-gray-300 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Gender (L/P)</label>
-                <select
-                  value={editingClient.GENDER ?? ""}
-                  onChange={(e) => handleModalChange("GENDER", e.target.value)}
-                  className="w-full border border-gray-300 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                >
-                  <option value="">Pilih</option>
-                  <option value="L">Laki-Laki</option>
-                  <option value="P">Perempuan</option>
-                </select>
+                <input type="text" value={editingClient.INISIAL ?? ""} onChange={(e) => handleModalChange("INISIAL", e.target.value)} className="w-full border px-3 py-2 rounded-lg text-sm" />
               </div>
 
               <div>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Umur</label>
-                <input
-                  type="number"
-                  value={editingClient.UMUR ?? ""}
-                  onChange={(e) => handleModalChange("UMUR", parseInt(e.target.value) || 0)}
-                  className="w-full border border-gray-300 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                <input 
+                  type="number" 
+                  value={editingClient.UMUR ?? ""} 
+                  onChange={(e) => {
+                    const umur = parseInt(e.target.value) || 0;
+                    handleModalChange("UMUR", umur);
+                    // Auto Kategori Usia
+                    handleModalChange("KATEGORI_USIA", umur < 18 ? "Anak" : "Dewasa");
+                  }} 
+                  className="w-full border px-3 py-2 rounded-lg text-sm" 
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Pekerjaan</label>
-                <input
-                  type="text"
-                  value={editingClient.PEKERJAAN ?? ""}
-                  onChange={(e) => handleModalChange("PEKERJAAN", e.target.value)}
-                  className="w-full border border-gray-300 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                />
+                <label className="block text-xs font-medium text-gray-500 mb-1">Kategori Usia (Auto)</label>
+                <input type="text" readOnly value={editingClient.KATEGORI_USIA ?? ""} className="w-full border px-3 py-2 rounded-lg text-sm bg-gray-100 text-gray-500 cursor-not-allowed" />
+              </div>
+
+              {/* Dropdowns */}
+              <div>
+                <label className="block text-xs font-medium text-gray-500 mb-1">Gender</label>
+                <select value={editingClient.GENDER ?? ""} onChange={(e) => handleModalChange("GENDER", e.target.value)} className="w-full border px-3 py-2 rounded-lg text-sm">
+                  <option value="">Pilih</option>
+                  <option value="Laki-Laki">Laki-Laki</option>
+                  <option value="Perempuan">Perempuan</option>
+                </select>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Asal Provinsi</label>
-                <input
-                  type="text"
-                  value={editingClient.ASAL_PROVINSI ?? ""}
-                  onChange={(e) => handleModalChange("ASAL_PROVINSI", e.target.value)}
-                  className="w-full border border-gray-300 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                />
+                <label className="block text-xs font-medium text-gray-500 mb-1">Agama</label>
+                <select value={editingClient.AGAMA ?? ""} onChange={(e) => handleModalChange("AGAMA", e.target.value)} className="w-full border px-3 py-2 rounded-lg text-sm">
+                  <option value="">Pilih</option>
+                  <option value="Islam">Islam</option>
+                  <option value="Kristen">Kristen</option>
+                  <option value="Katolik">Katolik</option>
+                  <option value="Hindu">Hindu</option>
+                  <option value="Buddha">Buddha</option>
+                  <option value="Konghucu">Konghucu</option>
+                </select>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Zat Digunakan</label>
-                <input
-                  type="text"
-                  value={editingClient.PENGGUNAAN_ZAT ?? ""}
-                  onChange={(e) => handleModalChange("PENGGUNAAN_ZAT", e.target.value)}
-                  className="w-full border border-gray-300 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                />
+                <label className="block text-xs font-medium text-gray-500 mb-1">Pendidikan</label>
+                <select value={editingClient.PENDIDIKAN ?? ""} onChange={(e) => handleModalChange("PENDIDIKAN", e.target.value)} className="w-full border px-3 py-2 rounded-lg text-sm">
+                  <option value="">Pilih</option>
+                  <option value="Tidak Sekolah">Tidak Sekolah</option>
+                  <option value="SD/Sederajat">SD/Sederajat</option>
+                  <option value="SMP/Sederajat">SMP/Sederajat</option>
+                  <option value="SMA/Sederajat">SMA/Sederajat</option>
+                  <option value="S1/D4">S1/D4</option>
+                </select>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Tanggal Masuk</label>
-                <input
-                  type="date"
-                  value={editingClient.TANGGAL_MASUK ?? ""}
-                  onChange={(e) => handleModalChange("TANGGAL_MASUK", e.target.value)}
-                  className="w-full border border-gray-300 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                />
+                <label className="block text-xs font-medium text-gray-500 mb-1">Status Pernikahan</label>
+                <select value={editingClient.STATUS ?? ""} onChange={(e) => handleModalChange("STATUS", e.target.value)} className="w-full border px-3 py-2 rounded-lg text-sm">
+                  <option value="">Pilih</option>
+                  <option value="Belum Menikah">Belum Menikah</option>
+                  <option value="Menikah">Menikah</option>
+                  <option value="Duda/Janda">Duda/Janda</option>
+                </select>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Tanggal Keluar</label>
-                <input
-                  type="date"
-                  value={editingClient.TANGGAL_KELUAR ?? ""}
-                  onChange={(e) => handleModalChange("TANGGAL_KELUAR", e.target.value)}
-                  className="w-full border border-gray-300 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                <label className="block text-xs font-medium text-gray-500 mb-1">Keterangan / Status</label>
+                <select value={editingClient["KETERANGAN/STATUS"] ?? ""} onChange={(e) => handleModalChange("KETERANGAN/STATUS", e.target.value)} className="w-full border px-3 py-2 rounded-lg text-sm">
+                  <option value="">Pilih</option>
+                  <option value="Voluntary">Voluntary</option>
+                  <option value="TAT(Voluntary)">TAT(Voluntary)</option>
+                  <option value="Compulsory">Compulsory</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-gray-500 mb-1">Rencana Rehab</label>
+                <select value={editingClient.RENCANA_REHAB ?? ""} onChange={(e) => handleModalChange("RENCANA_REHAB", e.target.value)} className="w-full border px-3 py-2 rounded-lg text-sm">
+                  <option value="">Pilih</option>
+                  <option value="BERAT">BERAT</option>
+                  <option value="SEDANG">SEDANG</option>
+                  <option value="RINGAN">RINGAN</option>
+                </select>
+              </div>
+
+              {/* Text & Date Inputs */}
+              <div><label className="block text-xs font-medium text-gray-500 mb-1">Pekerjaan</label><input type="text" value={editingClient.PEKERJAAN ?? ""} onChange={(e) => handleModalChange("PEKERJAAN", e.target.value)} className="w-full border px-3 py-2 rounded-lg text-sm" /></div>
+              <div><label className="block text-xs font-medium text-gray-500 mb-1">Tempat Lahir</label><input type="text" value={editingClient.TEMPAT_LAHIR ?? ""} onChange={(e) => handleModalChange("TEMPAT_LAHIR", e.target.value)} className="w-full border px-3 py-2 rounded-lg text-sm" /></div>
+              <div><label className="block text-xs font-medium text-gray-500 mb-1">Tanggal Lahir</label><input type="date" value={editingClient.TANGGAL_LAHIR ?? ""} onChange={(e) => handleModalChange("TANGGAL_LAHIR", e.target.value)} className="w-full border px-3 py-2 rounded-lg text-sm" /></div>
+              <div><label className="block text-xs font-medium text-gray-500 mb-1">Asal Provinsi</label><input type="text" value={editingClient.ASAL_PROVINSI ?? ""} onChange={(e) => handleModalChange("ASAL_PROVINSI", e.target.value)} className="w-full border px-3 py-2 rounded-lg text-sm" /></div>
+              <div><label className="block text-xs font-medium text-gray-500 mb-1">Usia Pertama Pakai</label><input type="number" value={editingClient.USIA_PERTAMA_KALI ?? ""} onChange={(e) => handleModalChange("USIA_PERTAMA_KALI", e.target.value)} className="w-full border px-3 py-2 rounded-lg text-sm" /></div>
+              <div><label className="block text-xs font-medium text-gray-500 mb-1">Tanggal Masuk</label><input type="date" value={editingClient.TANGGAL_MASUK ?? ""} onChange={(e) => handleModalChange("TANGGAL_MASUK", e.target.value)} className="w-full border px-3 py-2 rounded-lg text-sm" /></div>
+              <div><label className="block text-xs font-medium text-gray-500 mb-1">Tanggal Keluar</label><input type="date" value={editingClient.TANGGAL_KELUAR ?? ""} onChange={(e) => handleModalChange("TANGGAL_KELUAR", e.target.value)} className="w-full border px-3 py-2 rounded-lg text-sm" /></div>
+
+              {/* Multi-Select (ZAT & MOTIF) menggunakan string manual agar mudah dengan database */}
+              <div className="md:col-span-2 lg:col-span-3 mt-2 border-t pt-4">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Zat yang Digunakan (Pisahkan dengan koma jika lebih dari satu)</label>
+                <input 
+                  type="text" 
+                  placeholder="Contoh: Sabu, Ganja, Alkohol"
+                  value={editingClient.PENGGUNAAN_ZAT ?? ""} 
+                  onChange={(e) => handleModalChange("PENGGUNAAN_ZAT", e.target.value)} 
+                  className="w-full border px-3 py-2 rounded-lg text-sm bg-blue-50" 
                 />
-                <p className="text-[10px] text-gray-400 mt-1">Kosongkan jika klien masih aktif</p>
+              </div>
+
+              <div className="md:col-span-2 lg:col-span-3">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Motif Penggunaan (Pisahkan dengan koma)</label>
+                <input 
+                  type="text" 
+                  placeholder="Contoh: Eksperimen / Coba-coba, Faktor Sosial & Lingkungan"
+                  value={editingClient.MOTIF_PENGGUNAAN ?? ""} 
+                  onChange={(e) => handleModalChange("MOTIF_PENGGUNAAN", e.target.value)} 
+                  className="w-full border px-3 py-2 rounded-lg text-sm bg-blue-50" 
+                />
               </div>
             </div>
 
             <div className="sticky bottom-0 bg-gray-50 px-6 py-4 border-t flex justify-end gap-3 rounded-b-xl">
-              <button
-                onClick={() => setEditingClient(null)}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
-              >
-                Batal
-              </button>
-              <button
-                onClick={handleSaveEdit}
-                disabled={isSaving}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 flex items-center gap-2"
-              >
+              <button onClick={() => setEditingClient(null)} className="px-4 py-2 text-sm font-medium border rounded-lg hover:bg-gray-100">Batal</button>
+              <button onClick={handleSaveEdit} disabled={isSaving} className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50">
                 {isSaving ? "Menyimpan..." : "Simpan Perubahan"}
               </button>
             </div>

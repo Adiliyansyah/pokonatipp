@@ -2,50 +2,46 @@ import { supabase } from "@/lib/supabase";
 
 export async function PUT(req, { params }) {
   try {
-    // 1. Ambil ID dari URL
-    const id = params.id;
+    const { id } = await params;
     
-    // 2. Ambil data yang dikirim dari frontend
+    // Cegah id "undefined"
+    if (!id || id === "undefined") {
+      return Response.json({ success: false, error: "ID Klien tidak valid" }, { status: 400 });
+    }
+
     const body = await req.json();
 
-    // 3. Persiapkan payload (data yang akan diupdate). 
-    // Kita tangani masalah string kosong untuk kolom tanggal dan angka.
     const payload = {
       INISIAL: body.INISIAL,
       GENDER: body.GENDER,
-      UMUR: body.UMUR === "" || body.UMUR === null ? null : Number(body.UMUR),
+      KATEGORI_USIA: body.KATEGORI_USIA,
+      UMUR: body.UMUR ? Number(body.UMUR) : null,
+      TEMPAT_LAHIR: body.TEMPAT_LAHIR,
+      TANGGAL_LAHIR: body.TANGGAL_LAHIR || null,
+      AGAMA: body.AGAMA,
+      PENDIDIKAN: body.PENDIDIKAN,
+      STATUS: body.STATUS,
       PEKERJAAN: body.PEKERJAAN,
+      TANGGAL_MASUK: body.TANGGAL_MASUK || null,
+      RENCANA_REHAB: body.RENCANA_REHAB,
+      TANGGAL_KELUAR: body.TANGGAL_KELUAR || null,
+      "KETERANGAN/STATUS": body["KETERANGAN/STATUS"],
+      USIA_PERTAMA_KALI: body.USIA_PERTAMA_KALI ? Number(body.USIA_PERTAMA_KALI) : null,
       ASAL_PROVINSI: body.ASAL_PROVINSI,
+      MOTIF_PENGGUNAAN: body.MOTIF_PENGGUNAAN,
       PENGGUNAAN_ZAT: body.PENGGUNAAN_ZAT,
-      TANGGAL_MASUK: body.TANGGAL_MASUK === "" ? null : body.TANGGAL_MASUK,
-      TANGGAL_KELUAR: body.TANGGAL_KELUAR === "" ? null : body.TANGGAL_KELUAR,
-      // Anda bisa menambahkan field lain yang perlu di-update di sini
     };
 
-    // 4. Lakukan update ke Supabase berdasarkan ID
     const { data, error } = await supabase
-      .from("data_client") // Pastikan nama tabel ini benar
+      .from("data_client")
       .update(payload)
       .eq("id", id)
       .select();
 
-    // 5. Jika terjadi error dari Supabase
-    if (error) {
-      console.error("Supabase Error:", error);
-      return Response.json(
-        { success: false, error: error.message },
-        { status: 500 }
-      );
-    }
-
-    // 6. Jika berhasil
+    if (error) throw error;
     return Response.json({ success: true, data });
-
   } catch (err) {
     console.error("Server Error:", err);
-    return Response.json(
-      { success: false, error: "Terjadi kesalahan di server backend" },
-      { status: 500 }
-    );
+    return Response.json({ success: false, error: err.message || "Terjadi kesalahan" }, { status: 500 });
   }
 }

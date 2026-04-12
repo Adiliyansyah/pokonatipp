@@ -139,6 +139,43 @@ export default function OverviewPage() {
       .map(([name, value]) => ({ name, value }));
   }, [data]);
 
+// ======================
+  // MOTIF PENGGUNAAN (MULTI-SELECT)
+  // ======================
+  const motifChart = useMemo(() => {
+    const map: Record<string, number> = {};
+    data.forEach((d) => {
+      if (!d.MOTIF_PENGGUNAAN || d.MOTIF_PENGGUNAAN.trim() === "") return;
+      const motifList = d.MOTIF_PENGGUNAAN.split(",");
+      motifList.forEach((motif) => {
+        const cleanMotif = motif.trim();
+        if (cleanMotif) map[cleanMotif] = (map[cleanMotif] || 0) + 1;
+      });
+    });
+    return Object.entries(map).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name, value]) => ({ name, value }));
+  }, [data]);
+
+  // ======================
+  // PENDIDIKAN & PEKERJAAN
+  // ======================
+  const pendidikanChart = useMemo(() => {
+    const map: Record<string, number> = {};
+    data.forEach((d) => {
+      const p = d.PENDIDIKAN || "Tidak Diketahui";
+      map[p] = (map[p] || 0) + 1;
+    });
+    return Object.entries(map).map(([name, value]) => ({ name, value }));
+  }, [data]);
+
+  const pekerjaanChart = useMemo(() => {
+    const map: Record<string, number> = {};
+    data.forEach((d) => {
+      const p = d.PEKERJAAN || "Tidak Diketahui";
+      map[p] = (map[p] || 0) + 1;
+    });
+    return Object.entries(map).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name, value]) => ({ name, value }));
+  }, [data]);
+
   // ======================
   // PROVINSI / DAERAH (BAR CHART NEW)
   // ======================
@@ -261,6 +298,38 @@ export default function OverviewPage() {
         <div className="bg-white p-5 rounded-xl shadow">
           <h2 className="font-bold mb-3">Segment Umur</h2>
           <PieChart data={umurSegment} />
+        </div>
+
+        {/* BAR PEKERJAAN */}
+        <div className="bg-white p-5 rounded-xl shadow">
+          <h2 className="font-bold mb-3">Top 5 Pekerjaan</h2>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={pekerjaanChart} layout="vertical" margin={{ left: 40 }}>
+              <XAxis type="number" />
+              <YAxis dataKey="name" type="category" width={100} tick={{fontSize: 12}} />
+              <Tooltip />
+              <Bar dataKey="value" fill="#8b5cf6" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* PIE PENDIDIKAN */}
+        <div className="bg-white p-5 rounded-xl shadow">
+          <h2 className="font-bold mb-3">Distribusi Pendidikan</h2>
+          <PieChart data={pendidikanChart} />
+        </div>
+
+        {/* BAR MOTIF */}
+        <div className="bg-white p-5 rounded-xl shadow lg:col-span-2">
+          <h2 className="font-bold mb-3">Distribusi Motif Penggunaan Zat</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={motifChart}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="value" fill="#ec4899" />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
 
         {/* BAR PROVINSI / DAERAH */}
