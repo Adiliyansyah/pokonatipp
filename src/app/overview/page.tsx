@@ -113,10 +113,26 @@ export default function OverviewPage() {
     const map: Record<string, number> = {};
 
     data.forEach((d) => {
-      const key = d.PENGGUNAAN_ZAT || "Unknown";
-      map[key] = (map[key] || 0) + 1;
+      // Jika data kosong atau null, masukkan ke "Unknown"
+      if (!d.PENGGUNAAN_ZAT || d.PENGGUNAAN_ZAT.trim() === "") {
+        map["Unknown"] = (map["Unknown"] || 0) + 1;
+      } else {
+        // Pecah string berdasarkan koma
+        const zatList = d.PENGGUNAAN_ZAT.split(",");
+        
+        // Looping untuk setiap zat yang sudah dipecah
+        zatList.forEach((zat) => {
+          // Bersihkan spasi kosong di awal/akhir kata (contoh: " Sabu " menjadi "Sabu")
+          const cleanZat = zat.trim();
+          
+          if (cleanZat) {
+            map[cleanZat] = (map[cleanZat] || 0) + 1;
+          }
+        });
+      }
     });
 
+    // Mengubah object menjadi array, mengurutkan dari yang terbanyak, dan mengambil 6 teratas
     return Object.entries(map)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 6)
