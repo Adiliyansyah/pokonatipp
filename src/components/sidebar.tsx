@@ -23,6 +23,7 @@ const navItems = [
   { href: "/sdm", label: "SDM", icon: <BsPersonGear size={20} /> },
   { href: "/keuangan", label: "Keuangan", icon: <MdAttachMoney size={20} /> },
   { href: "/kepuasan", label: "Kepuasan Layanan", icon: <FaRegStar size={18} /> },
+  { href: "/tambahpasien", label: "Tambah Pasien", icon: <FaIdCard size={18} /> },
 ];
 
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
@@ -31,7 +32,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   return (
     <>
       <aside
-        className={`fixed top-0 left-0 h-screen bg-gradient-to-b from-slate-900 to-blue-900 text-white transition-all duration-300 z-50 flex flex-col shadow-2xl ${
+        className={`fixed top-0 left-0 h-screen bg-linear-to-b from-slate-900 to-blue-900 text-white transition-all duration-300 z-50 flex flex-col shadow-2xl ${
           isOpen ? "w-64" : "w-20"
         }`}
       >
@@ -62,12 +63,12 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                 href={item.href}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-300 ${
                   isActive
-                    ? "bg-gradient-to-r from-orange-400 to-orange-500 text-white shadow-lg scale-105"
+                    ? "bg-linear-to-r from-orange-400 to-orange-500 text-white shadow-lg scale-105"
                     : "text-blue-200 hover:bg-blue-800/50 hover:text-white"
                 }`}
                 title={!isOpen ? item.label : undefined}
               >
-                <span className="flex-shrink-0">{item.icon}</span>
+                <span className="shrink-0">{item.icon}</span>
                 <span
                   className={`text-sm font-medium whitespace-nowrap transition-all duration-300 ${
                     isOpen ? "opacity-100 w-auto" : "opacity-0 w-0 overflow-hidden"
