@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaBars } from "react-icons/fa";
 import { CiGrid41 } from "react-icons/ci";
-import { RxPeople } from "react-icons/rx";
 import { LuBuilding2 } from "react-icons/lu";
 import { BsPersonGear } from "react-icons/bs";
 import { MdAttachMoney } from "react-icons/md";
