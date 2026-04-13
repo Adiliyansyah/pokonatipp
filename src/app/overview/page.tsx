@@ -15,14 +15,29 @@ import {
 
 import PieChart from "@/components/piecharts";
 
+// ======================
+// TYPE DARI DATABASE (UPDATE LENGKAP)
+// ======================
 type Client = {
   id: number;
+  INISIAL: string | null;
   GENDER: string | null;
+  KATEGORI_USIA: string | null;
   UMUR: number | null;
-  ASAL_PROVINSI: string | null;
-  PENGGUNAAN_ZAT: string | null;
+  TEMPAT_LAHIR: string | null;
+  TANGGAL_LAHIR: string | null;
+  AGAMA: string | null;
+  PENDIDIKAN: string | null;
+  STATUS: string | null;
+  PEKERJAAN: string | null;
   TANGGAL_MASUK: string | null;
+  RENCANA_REHAB: string | null;
   TANGGAL_KELUAR: string | null;
+  "KETERANGAN/STATUS": string | null;
+  USIA_PERTAMA_KALI: number | null;
+  ASAL_PROVINSI: string | null;
+  MOTIF_PENGGUNAAN: string | null;
+  PENGGUNAAN_ZAT: string | null;
 };
 
 export default function OverviewPage() {
