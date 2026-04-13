@@ -16,19 +16,29 @@ const DAFTAR_PROVINSI = [
 // ======================
 // TYPE DARI DATABASE
 // ======================
+// ======================
+// TYPE DARI DATABASE (SUDAH DIPERBARUI)
+// ======================
 type Client = {
   id: number;
   INISIAL: string | null;
   GENDER: string | null;
+  KATEGORI_USIA: string | null;
   UMUR: number | null;
   TEMPAT_LAHIR: string | null;
   TANGGAL_LAHIR: string | null;
+  AGAMA: string | null;
+  PENDIDIKAN: string | null;
+  STATUS: string | null;
   PEKERJAAN: string | null;
   TANGGAL_MASUK: string | null;
+  RENCANA_REHAB: string | null;
   TANGGAL_KELUAR: string | null;
+  "KETERANGAN/STATUS": string | null;
+  USIA_PERTAMA_KALI: number | null;
   ASAL_PROVINSI: string | null;
+  MOTIF_PENGGUNAAN: string | null;
   PENGGUNAAN_ZAT: string | null;
-  STATUS: string | null;
 };
 
 // ======================
@@ -208,13 +218,13 @@ const handleSaveEdit = async () => {
     }
   };
 
-  // HELPER UNTUK MULTI-SELECT (ZAT/MOTIF)
+// HELPER UNTUK MULTI-SELECT (ZAT/MOTIF)
   const handleToggleTag = (currentValue: string, tag: string, field: keyof Client) => {
     let items = currentValue ? currentValue.split(",").map(i => i.trim()) : [];
     if (items.includes(tag)) {
-      items = items.filter(i => i !== tag); // Hapus jika sudah ada
+      items = items.filter(i => i !== tag); 
     } else {
-      items.push(tag); // Tambah jika belum ada
+      items.push(tag); 
     }
     handleModalChange(field, items.join(", "));
   };
