@@ -5,6 +5,14 @@ import { Search, ChevronLeft, ChevronRight, X } from "lucide-react";
 
 const PAGE_SIZE = 20;
 
+const DAFTAR_PROVINSI = [
+  "Aceh", "Sumatera Utara", "Sumatera Barat", "Riau", "Kepulauan Riau", "Jambi", "Bengkulu", "Sumatera Selatan", "Kepulauan Bangka Belitung", "Lampung",
+  "Banten", "DKI Jakarta", "Jawa Barat", "Jawa Tengah", "DI Yogyakarta", "Jawa Timur", "Bali", "Nusa Tenggara Barat", "Nusa Tenggara Timur",
+  "Kalimantan Barat", "Kalimantan Tengah", "Kalimantan Selatan", "Kalimantan Timur", "Kalimantan Utara",
+  "Sulawesi Utara", "Sulawesi Tengah", "Sulawesi Selatan", "Sulawesi Tenggara", "Gorontalo", "Sulawesi Barat",
+  "Maluku", "Maluku Utara", "Papua Barat", "Papua", "Papua Tengah", "Papua Pegunungan", "Papua Selatan", "Papua Barat Daya"
+];
+
 // ======================
 // TYPE DARI DATABASE
 // ======================
@@ -141,41 +149,74 @@ export default function BiodataPage() {
     }));
   };
 
-  const handleSaveEdit = async () => {
-    if (!editingClient) return;
+const handleSaveEdit = async () => {
+  if (!editingClient || !editingClient.id) {
+    alert("ID Klien tidak ditemukan");
+    return;
+  }
+  
+  setIsSaving(true);
+  try {
+    const res = await fetch(`/api/patients/${editingClient.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(editingClient),
+    });
+
+    // Cek apakah responsnya bukan JSON (misal error 404/500 HTML)
+    const contentType = res.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      const textError = await res.text();
+      console.error("Server returned non-JSON:", textError);
+      throw new Error("Server mengirimkan respons HTML. Pastikan file API [id]/route.js sudah benar.");
+    }
+
+    const json = await res.json();
+    if (json.success) {
+      setData((prev) => prev.map((c) => (c.id === editingClient.id ? editingClient : c)));
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+        setEditingClient(null);
+      }, 1500);
+    } else {
+      alert(json.error || "Gagal menyimpan");
+    }
+  } catch (err: any) {
+    alert(err.message || "Terjadi kesalahan koneksi");
+  } finally {
+    setIsSaving(false);
+  }
+};
+
+// FUNGSI HAPUS DATA
+  const handleDelete = async () => {
+    if (!editingClient || !confirm("Apakah Anda yakin ingin menghapus data ini?")) return;
     setIsSaving(true);
-
     try {
-      // Asumsi Anda memiliki endpoint PUT /api/patients/[id] yang berfungsi
-      const res = await fetch(`/api/patients/${editingClient.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(editingClient),
-      });
-
+      const res = await fetch(`/api/patients/${editingClient.id}`, { method: "DELETE" });
       const json = await res.json();
-
       if (json.success) {
-        // Update data di state lokal agar tabel langsung berubah
-        setData((prevData) =>
-          prevData.map((c) => (c.id === editingClient.id ? editingClient : c))
-        );
-        setShowSuccess(true);
-        setTimeout(() => {
-          setShowSuccess(false);
-          setEditingClient(null); // Tutup modal
-        }, 1500);
-      } else {
-        alert(json.error || "Gagal menyimpan data");
+        setData(prev => prev.filter(c => c.id !== editingClient.id));
+        setEditingClient(null);
+        alert("Data berhasil dihapus secara permanen.");
       }
     } catch (err) {
-      console.error(err);
-      alert("Terjadi kesalahan pada server");
+      alert("Gagal menghapus data dari server.");
     } finally {
       setIsSaving(false);
     }
+  };
+
+  // HELPER UNTUK MULTI-SELECT (ZAT/MOTIF)
+  const handleToggleTag = (currentValue: string, tag: string, field: keyof Client) => {
+    let items = currentValue ? currentValue.split(",").map(i => i.trim()) : [];
+    if (items.includes(tag)) {
+      items = items.filter(i => i !== tag); // Hapus jika sudah ada
+    } else {
+      items.push(tag); // Tambah jika belum ada
+    }
+    handleModalChange(field, items.join(", "));
   };
 
   // ======================

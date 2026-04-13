@@ -21,41 +21,53 @@ export default function TambahPasienPage() {
     const { name, value } = e.target;
     setFormData((prev) => {
       const newData = { ...prev, [name]: value };
-      // Auto Kategori Usia
+      
+      // Auto Kategori Usia (Revisi 3 Kategori)
       if (name === "umur") {
-        newData.kategori_usia = (parseInt(value) || 0) < 18 ? "Anak" : "Dewasa";
+        const umur = parseInt(value) || 0;
+        if (umur < 12) {
+          newData.kategori_usia = "Anak/Khusus";
+        } else if (umur >= 12 && umur <= 17) {
+          newData.kategori_usia = "Adolescent";
+        } else {
+          newData.kategori_usia = "Dewasa";
+        }
       }
       return newData;
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setIsLoading(true);
 
-    try {
-      const res = await fetch("/api/patients", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const result = await res.json();
+  // Bersihkan data: ubah string kosong menjadi null sebelum dikirim
+  const cleanedData = Object.fromEntries(
+    Object.entries(formData).map(([key, value]) => [key, value === "" ? null : value])
+  );
 
-      if (res.ok && result.success) {
-        setShowSuccess(true);
-        setTimeout(() => {
-          setShowSuccess(false);
-          router.push("/biodata");
-        }, 1500);
-      } else {
-        alert(result.error || "Gagal menyimpan data");
-      }
-    } catch (error) {
-      alert("Terjadi kesalahan server");
-    } finally {
-      setIsLoading(false);
+  try {
+    const res = await fetch("/api/patients", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(cleanedData),
+    });
+
+    const result = await res.json();
+    if (result.success) {
+      setShowSuccess(true);
+      setTimeout(() => {
+        router.push("/biodata");
+      }, 1500);
+    } else {
+      alert(result.error || "Gagal menyimpan");
     }
-  };
+  } catch (error) {
+    alert("Terjadi kesalahan sistem");
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <div className="flex w-full min-h-screen absolute inset-0 p-6">
