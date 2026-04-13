@@ -111,7 +111,7 @@ export default function TambahPasienPage() {
 
   return (
     <div className="flex w-full min-h-screen absolute inset-0 p-6">
-      <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+    
 
       <div
         className={`flex flex-col transition-all duration-300 w-full p-6 overflow-y-auto ${

@@ -17,7 +17,6 @@ type SidebarProps = {
 
 const navItems = [
   { href: "/overview", label: "Overview", icon: <CiGrid41 size={20} /> },
-  { href: "/rehabilitasi", label: "Rehabilitasi Klien", icon: <RxPeople size={20} /> },
   { href: "/biodata", label: "Biodata Klien", icon: <FaIdCard size={18} /> },
   { href: "/kapasitas", label: "Kapasitas & Hunian", icon: <LuBuilding2 size={20} /> },
   { href: "/sdm", label: "SDM", icon: <BsPersonGear size={20} /> },
