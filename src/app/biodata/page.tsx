@@ -186,21 +186,6 @@ export default function BiodataPage() {
         <p className="text-sm text-gray-500 mt-1">Data identitas klien rehabilitasi BNN Tanah Merah</p>
       </div>
 
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="bg-gradient-to-r from-blue-500 to-teal-400 p-5 rounded-xl shadow text-white">
-          <p className="text-3xl font-bold">{biodataKlien.length}</p>
-          <p className="text-sm text-blue-100 mt-1">Total Data Klien</p>
-        </div>
-        <div className="bg-gradient-to-r from-green-400 to-green-600 p-5 rounded-xl shadow text-white">
-          <p className="text-3xl font-bold">{biodataKlien.filter(isAktif).length}</p>
-          <p className="text-sm text-green-100 mt-1">Klien Aktif</p>
-        </div>
-        <div className="bg-gradient-to-r from-gray-500 to-gray-700 p-5 rounded-xl shadow text-white">
-          <p className="text-3xl font-bold">{biodataKlien.filter(isSelesai).length}</p>
-          <p className="text-sm text-gray-200 mt-1">Klien Selesai</p>
-        </div>
-      </div>
-
       <div className="bg-white p-6 rounded-xl shadow">
         <div className="flex flex-wrap items-center gap-3 mb-4">
           <div className="relative flex-1 min-w-[200px] max-w-sm">

@@ -39,7 +39,7 @@ export default function RootLayout({
 
             {/* Content */}
             <main
-              className={`transition-all duration-300 pt-20 pb-6 px-6 min-h-screen ${
+              className={`transition-all duration-300 min-h-screen ${
                 isOpen ? "ml-64" : "ml-20"
               }`}
             >
