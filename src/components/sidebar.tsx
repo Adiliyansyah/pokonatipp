@@ -18,10 +18,9 @@ const navItems = [
   { href: "/beranda", label: "Beranda", icon: <CiGrid41 size={20} /> },
   { href: "/biodata", label: "Pendaftaran & Antrean", icon: <FaIdCard size={18} /> },
   { href: "/statusdokter", label: "Status Dokter", icon: <LuBuilding2 size={20} /> },
-  { href: "/sdm", label: "SDM", icon: <BsPersonGear size={20} /> },
-  { href: "/keuangan", label: "Keuangan", icon: <MdAttachMoney size={20} /> },
-  { href: "/kepuasan", label: "Kepuasan Layanan", icon: <FaRegStar size={18} /> },
-  { href: "/tambahpasien", label: "Tambah Pasien", icon: <FaIdCard size={18} /> },
+  { href: "/monitoring", label: "Monitoring Poli", icon: <BsPersonGear size={20} /> },
+  { href: "/riwayatpasien", label: "Riwayat Pasien", icon: <MdAttachMoney size={20} /> },
+  { href: "/suratdandokumen", label: "Surat & Dokumen", icon: <FaRegStar size={18} /> },
 ];
 
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {

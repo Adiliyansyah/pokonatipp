@@ -6,7 +6,7 @@ import { LuClock1 } from "react-icons/lu";
 import { LuClock4 } from "react-icons/lu";
 
 import StatCard from "@/components/statcard";
-import AntreanAktifTable from "@/components/antreanaktiftable";
+import AntreanAktifTable from "@/components/bebanantrian";
 import StatusDokterCard from "@/components/statusdoktercard";
 
 export default function BerandaPage() {
@@ -88,7 +88,7 @@ export default function BerandaPage() {
         {/* TABEL ANTREAN & DOKTER */}
         {/* ====================== */}
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
+        <div className="w-full h-screen bg-gray-300 py-3 px-2">
 
           {/* ANTREAN */}
           <div className="xl:col-span-2 bg-white rounded-2xl p-5 shadow-sm">
@@ -96,12 +96,8 @@ export default function BerandaPage() {
             <div className="flex items-center justify-between p-5">
 
               <h2 className="text-lg font-semibold text-gray-800">
-                Antrean Aktif
+                Beban antrean per poli
               </h2>
-
-              <button className="text-green-600 hover:text-green-700 font-medium text-sm">
-                Lihat semua →
-              </button>
 
             </div>
 
@@ -109,24 +105,6 @@ export default function BerandaPage() {
 
           </div>
 
-          {/* STATUS DOKTER */}
-          <div className="bg-white rounded-2xl p-5 shadow-sm">
-
-            <div className="flex items-center justify-between p-5">
-
-              <h2 className="text-lg font-semibold text-gray-800">
-                Status dokter hari ini
-              </h2>
-
-              <button className="text-green-600 hover:text-green-700 font-medium text-sm">
-                Kelola →
-              </button>
-
-            </div>
-
-            <StatusDokterCard />
-
-          </div>
 
         </div>
 

@@ -1,107 +1,88 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import TabelShiftPetugas from "@/components/tabelshiftpetugas";
-import TabelTurnover from "@/components/tabelturnover";
-// ======================
-// TYPE DATA
-// ======================
-type Client = {
-  id: number;
-  INISIAL: string | null;
-  GENDER: string | null;
-  UMUR: number | null;
-  TANGGAL_MASUK: string | null;
-  TANGGAL_KELUAR: string | null;
-};
+import AntreanAktifTable from "@/components/jadwaldokter";
+import StatusDokterCard from "@/components/ringkasandokter";
 
-export default function OverviewPage() {
-  const [data, setData] = useState<Client[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function BerandaPage() {
 
   // ======================
-  // FETCH DATA
+  // DUMMY KPI
+  // Nanti ganti dari API
   // ======================
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch("/api/patients");
-        const json = await res.json();
-        setData(json.data || []);
-      } catch (error) {
-        console.error(error);
-        setData([]);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchData();
-  }, []);
+  const totalAntrean = 5;
+  const sedangDiperiksa = 1;
+  const menunggu = 3;
+  const selesai = 1;
 
-  // ======================
-  // KPI
-  // ======================
-  const total = data.length;
+  return (
+    <div className="w-full min-h-screen bg-gray-300">
 
-  const aktif = data.filter(
-    (item) =>
-      !item.TANGGAL_KELUAR ||
-      item.TANGGAL_KELUAR === "-" ||
-      item.TANGGAL_KELUAR === ""
-  ).length;
+      <div className="p-6 py-18 space-y-3">
 
-  const selesai = data.filter(
-    (item) =>
-      item.TANGGAL_KELUAR &&
-      item.TANGGAL_KELUAR !== "-" &&
-      item.TANGGAL_KELUAR !== ""
-  ).length;
+        {/* ====================== */}
+        {/* HEADER */}
+        {/* ====================== */}
 
-  const antreanAktif = data.filter(
-    (item) =>
-      !item.TANGGAL_KELUAR ||
-      item.TANGGAL_KELUAR === "-" ||
-      item.TANGGAL_KELUAR === ""
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800">
+            Status Dokter
+          </h1>
+
+          <p className="text-gray-500 text-sm">
+            Senin, 26 Mei 2025 • Sesi Pagi
+          </p>
+        </div>
+
+        {/* ====================== */}
+        {/* KPI CARDS */}
+        {/* ====================== */}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 ">
+
+        </div>
+
+        {/* ====================== */}
+        {/* TABEL ANTREAN & DOKTER */}
+        {/* ====================== */}
+
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
+
+          {/* ANTREAN */}
+          <div className="xl:col-span-2 bg-white rounded-2xl p-5 shadow-sm">
+
+            <div className="flex items-center justify-between p-5">
+
+              <h2 className="text-lg font-semibold text-gray-800">
+                Jadwal & status dokter
+              </h2>
+
+            </div>
+
+            <AntreanAktifTable />
+
+          </div>
+
+          {/* STATUS DOKTER */}
+          <div className="bg-white rounded-2xl p-5 shadow-sm">
+
+            <div className="flex items-center justify-between p-5">
+
+              <h2 className="text-lg font-semibold text-gray-800">
+                Ringkasan pasien per dokter
+              </h2>
+
+
+            </div>
+
+            <StatusDokterCard />
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
   );
-
-  if (loading) {
-    return (
-      <div className="p-6 text-gray-500">
-        Loading dashboard...
-      </div>
-    );
-  }
-
-return (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div className="bg-white p-6 rounded-xl shadow">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-gray-800">
-          Antrean Aktif
-        </h2>
-
-        <button className="text-blue-600 hover:text-blue-800 font-medium text-sm">
-          Lihat Semua →
-        </button>
-      </div>
-
-      <TabelShiftPetugas />
-    </div>
-
-    <div className="bg-white p-6 rounded-xl shadow">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-gray-800">
-          Status Dokter hari ini
-        </h2>
-
-        <button className="text-blue-600 hover:text-blue-800 font-medium text-sm">
-          Kelola →
-        </button>
-      </div>
-
-      <TabelTurnover />
-    </div>
-  </div>
-);
 }
